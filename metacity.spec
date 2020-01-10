@@ -3,7 +3,7 @@
 Summary: Unobtrusive window manager
 Name: metacity
 Version: 2.28.0
-Release: 20%{?dist}
+Release: 23%{?dist}
 URL: http://download.gnome.org/sources/metacity/
 Source0: http://download.gnome.org/sources/metacity/2.28/metacity-%{version}.tar.bz2
 Patch0: default-theme.patch
@@ -70,6 +70,8 @@ Patch29: Allow-breaking-out-from-maximization-during-mouse.patch
 # If we pull in the full fix for 461927 at any point this patch
 # can be dropped.
 Patch30: metacity-2.28.0-unmaximize-user-rect.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=802916
+Patch31: 0001-window-Do-not-open-password-dialogs-underneath-fulls.patch
 
 License: GPLv2+
 Group: User Interface/Desktops
@@ -160,6 +162,7 @@ API. This package exists purely for technical reasons.
 %patch28 -p1 -b .grab-tracking
 %patch29 -p1 -b .mouse-unmaximize
 %patch30 -p1 -b .unmaximize-user-rect
+%patch31 -p1 -b .polkit-focus-stealing
 
 # force regeneration
 rm src/metacity.schemas
@@ -267,6 +270,18 @@ fi
 %{_mandir}/man1/metacity-window-demo.1.gz
 
 %changelog
+* Fri May 04 2012 Florian Muellner <fmuellner@redhat.com> 2.28.0-23
+- Do not open password dialogs underneath fullscreen windows
+  Resolves: rhbz 802916
+
+* Wed Mar 07 2012 Ray Strode <rstrode@redhat.com> 2.28.0-22
+- Drop patch introduced in 21 following discussion on bug
+  Related: rhbz 526399
+
+* Wed Mar 07 2012 Ray Strode <rstrode@redhat.com> 2.28.0-21
+- Add keybinding for "interactive screenshot"
+  Resolves: rhbz 526399
+
 * Thu Aug 19 2010 Owen Taylor <otaylor@redhat.com> - 2.28.0-20
 - Fix cases where unmaximized size wouldn't be honored when unmaximizing
   in reduced resources mode.
